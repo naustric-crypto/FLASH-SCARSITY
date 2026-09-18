@@ -65,6 +65,10 @@ export async function POST(request: Request) {
         trial_settings: {
           end_behavior: { missing_payment_method: "cancel" },
         },
+        metadata: {
+          plan: plan.id,
+          email: email ?? "",
+        },
       },
       metadata: {
         plan: plan.id,

@@ -49,6 +49,23 @@ model GeneratedCode {
   @@index([expiresAt, status])
 }
 
+model BillingSubscription {
+  id                   String   @id @default(cuid())
+  email                String?
+  stripeCustomerId     String?  @unique
+  stripeSubscriptionId String?  @unique
+  plan                 String?
+  status               String
+  trialEndsAt          DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+}
+
 enum DiscountType {
   PERCENTAGE
   FIXED_AMOUNT
