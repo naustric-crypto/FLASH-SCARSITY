@@ -405,8 +405,8 @@ export default function Dashboard() {
       </div>
 
       {isModalOpen && (
-        <div role="dialog" aria-modal="true" aria-labelledby="modal-title" className="fixed inset-0 z-10 grid place-items-center bg-slate-900/50 p-5 backdrop-blur-sm">
-          <form onSubmit={saveCampaign} className="w-full max-w-md rounded-[28px] border border-slate-200 bg-[#f8f7f4] p-7 shadow-[0_30px_80px_rgba(15,23,42,0.2)]">
+        <div role="dialog" aria-modal="true" aria-labelledby="modal-title" className="fixed inset-0 z-10 flex items-end justify-center bg-slate-900/50 p-0 backdrop-blur-sm sm:p-5">
+          <form id="campaign-form" onSubmit={saveCampaign} className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-t-[28px] border border-slate-200 bg-[#f8f7f4] p-7 shadow-[0_-30px_80px_rgba(15,23,42,0.2)] sm:rounded-[28px]">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#e76f51]">{editingCampaignId ? "Edit campaign" : "New campaign"}</p>
@@ -429,6 +429,7 @@ export default function Dashboard() {
               Campaign name
               <input
                 required
+                autoFocus={!editingCampaignId}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 placeholder="e.g. Weekend spark"
