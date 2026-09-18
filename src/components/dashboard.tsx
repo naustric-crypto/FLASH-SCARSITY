@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Campaign = {
   id?: string;
@@ -34,6 +35,7 @@ const defaultMetrics: SummaryMetrics = {
 type FilterTab = "Overview" | "Live" | "Paused" | "Archived";
 
 export default function Dashboard() {
+  const router = useRouter();
   const [campaigns, setCampaigns] = useState<Campaign[]>(initialCampaigns);
   const [metrics, setMetrics] = useState<SummaryMetrics>(defaultMetrics);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -85,11 +87,6 @@ export default function Dashboard() {
     setShopUrl("northstar-goods.myshopify.com");
     setAccessToken("");
     setEditingCampaignId(null);
-  }
-
-  function openCreateModal() {
-    resetForm();
-    setModalOpen(true);
   }
 
   function openEditModal(campaign: Campaign) {
@@ -251,7 +248,7 @@ export default function Dashboard() {
 
           <button
             type="button"
-            onClick={openCreateModal}
+            onClick={() => router.push("/dashboard/campaigns/new")}
             className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition duration-200 hover:-translate-y-0.5 hover:bg-[#006d77]"
           >
             + Create campaign
