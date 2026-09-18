@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #182126;
+  --paper: #f5f4ef;
+  --teal: #006d77;
+  --coral: #e76f51;
+  --line: #d9ddd6;
+  --font-sans: "Avenir Next", "Segoe UI", sans-serif;
+  --font-display: Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--font-sans); }
+button, input, select { font: inherit; }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-rise-in { animation: rise-in 500ms ease-out both; }

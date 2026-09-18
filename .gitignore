@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+prisma/*.db
+tsconfig.tsbuildinfo
+nodejs/
