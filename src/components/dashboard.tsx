@@ -384,7 +384,7 @@ export default function Dashboard() {
                             </button>
                             <button
                               type="button"
-                              onClick={() => openEditModal(campaign)}
+                              onClick={() => campaign.id && router.push(`/dashboard/campaigns/${campaign.id}/edit`)}
                               className="rounded-full border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
                             >
                               Edit
