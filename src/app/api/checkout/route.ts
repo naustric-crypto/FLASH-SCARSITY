@@ -21,6 +21,13 @@ export async function POST(request: Request) {
     const baseUrl = getBaseUrl(request);
 
     if (!stripe) {
+      if (process.env.NODE_ENV === "production") {
+        return NextResponse.json(
+          { ok: false, error: "Stripe billing is not configured for production." },
+          { status: 503 },
+        );
+      }
+
       return NextResponse.json({
         ok: true,
         demo: true,
