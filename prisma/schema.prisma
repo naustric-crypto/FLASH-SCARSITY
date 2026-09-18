@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Merchant {
+  id          String     @id @default(cuid())
+  shopUrl     String     @unique
+  accessToken String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  campaigns   Campaign[]
+
+  @@index([shopUrl])
+}
+
+model Campaign {
+  id             String         @id @default(cuid())
+  merchantId     String
+  name           String
+  discountValue  Decimal        @db.Decimal(10, 2)
+  discountType   DiscountType   @default(PERCENTAGE)
+  durationMinutes Int           @default(15)
+  status         CampaignStatus @default(ACTIVE)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  merchant       Merchant       @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  generatedCodes GeneratedCode[]
+
+  @@index([merchantId, status])
+}
+
+model GeneratedCode {
+  id             String            @id @default(cuid())
+  campaignId     String
+  code           String            @unique
+  expiresAt      DateTime
+  status         GeneratedCodeStatus @default(ACTIVE)
+  shopifyPriceRuleId String?
+  shopifyDiscountCodeId String?
+  createdAt      DateTime          @default(now())
+  campaign       Campaign          @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId, status])
+  @@index([expiresAt, status])
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+enum CampaignStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum GeneratedCodeStatus {
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
